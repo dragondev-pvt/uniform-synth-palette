@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Beaker, Users, Target, CheckCircle } from "lucide-react";
+import researchLabImage from "@/assets/research-lab.jpg";
+import qualityControlImage from "@/assets/quality-control.jpg";
 
 const ResearchSection = () => {
   const researchPillars = [
@@ -65,6 +67,39 @@ const ResearchSection = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Research Lab Showcase */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          <div className="relative rounded-2xl overflow-hidden shadow-elevated group">
+            <img 
+              src={researchLabImage} 
+              alt="Advanced research laboratory with cutting-edge equipment" 
+              className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-hero-gradient/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="text-center text-white">
+                <Beaker className="w-12 h-12 mx-auto mb-2" />
+                <h4 className="text-xl font-bold">R&D Innovation Center</h4>
+                <p className="text-sm opacity-90">Where breakthrough formulations are born</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="relative rounded-2xl overflow-hidden shadow-elevated group">
+            <img 
+              src={qualityControlImage} 
+              alt="Quality control laboratory with precision testing equipment" 
+              className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-success-gradient/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="text-center text-white">
+                <CheckCircle className="w-12 h-12 mx-auto mb-2" />
+                <h4 className="text-xl font-bold">Quality Control Lab</h4>
+                <p className="text-sm opacity-90">Precision testing for excellence</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Capabilities Grid */}

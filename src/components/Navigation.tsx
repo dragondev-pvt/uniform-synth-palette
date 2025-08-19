@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: "Home", href: "#home" },
     { label: "About Us", href: "#about" },
     { label: "Products", href: "#products" },
+    { label: "Pricing", href: "#pricing" },
     { label: "R&D & Quality", href: "#research" },
     { label: "Sustainability", href: "#sustainability" },
     { label: "Contact", href: "#contact" },
@@ -34,14 +39,35 @@ const Navigation = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 story-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
                 {item.label}
               </a>
             ))}
-            <Button variant="default" size="sm">
-              Get Quote
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" onClick={() => navigate("/profile")}>
+                  <User className="h-4 w-4 mr-2" />
+                  Profile
+                </Button>
+                <Button variant="outline" size="sm" onClick={signOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" onClick={() => navigate("/auth")}>
+                  Sign In
+                </Button>
+                <Button variant="default" size="sm" onClick={() => navigate("/auth")}>
+                  Get Quote
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -68,15 +94,36 @@ const Navigation = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200 py-2"
-                  onClick={() => setIsOpen(false)}
+                  className="text-muted-foreground hover:text-primary transition-colors duration-200 py-2 story-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                 >
                   {item.label}
                 </a>
               ))}
-              <Button variant="default" className="mt-4">
-                Get Quote
-              </Button>
+              {user ? (
+                <div className="space-y-2 mt-4">
+                  <Button variant="ghost" className="w-full" onClick={() => navigate("/profile")}>
+                    <User className="h-4 w-4 mr-2" />
+                    Profile
+                  </Button>
+                  <Button variant="outline" className="w-full" onClick={signOut}>
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-2 mt-4">
+                  <Button variant="ghost" className="w-full" onClick={() => navigate("/auth")}>
+                    Sign In
+                  </Button>
+                  <Button variant="default" className="w-full" onClick={() => navigate("/auth")}>
+                    Get Quote
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
